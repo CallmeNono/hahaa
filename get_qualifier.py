@@ -324,7 +324,6 @@ def get_other_external_relationship(sentence,entity_list):
                 return terms
 
         terms.append(make_term(name=_type1, value=entity_list[0]["entity"], logic=1))
-        print("ooooooo",terms)
         return terms
 
     else: ###数组不为1或0
@@ -447,7 +446,7 @@ def get_qualifier(sentence):   #######主函数#########
     #return [{'value': '油耗低', 'name': '排量描述', 'logic': 1}, {'value': '宝马3系', 'name': '车系1', 'logic': 1}, {'value': '>720000', 'name': '价格', 'logic': 1}, {'value': '<880000', 'name': '价格', 'logic': 1}]
     haha = time.time()
     orca_result = requests.get("http://api.orca.corpautohome.com/cognitive?q={}".format(sentence)).json()
-    print("the_orca",orca_result)
+    print("orca原结果",orca_result)
     entity_list = orca_result["entities"]
     the_intent = orca_result["topScoringIntent"]["intent"]
     # entity_list = {'query': '我要一个不要排量好的50万-100万,80万左右,30万以内，最多20万,轴距5m以内排量2.0t以内第三排座位', 'intents': [{'intent': 'None', 'score': 0.00017077346274163574}, {'intent': '保值率', 'score': 1.1366290547654145e-10}, {'intent': '保 养', 'score': 2.2508478636495965e-08}, {'intent': '口碑', 'score': 2.0310471882112324e-06}, {'intent': '品牌百科', 'score': 2.327756298825534e-08}, {'intent': '待定', 'score': 3.578276563942495e-10}, {'intent': '搜索', 'score': 0.0009961813921108842}, {'intent': '新闻', 'score': 6.68408395299025e-09}, {'intent': '经销商', 'score': 8.731705491982211e-08}, {'intent': '论坛', 'score': 1.1347928108307315e-07}, {'intent': '询价', 'score': 4.783480108017102e-06}, {'intent': '车型对比', 'score': 0.0014305261429399252}, {'intent': '车系图片', 'score': 8.182605704121215e-10}, {'intent': '选车', 'score': 0.9973706007003784}, {'intent': '配置', 'score': 2.4541512175346725e-05}, {'intent': '配置百科', 'score': 1.8894237996391894e-07}, {'intent': '重新选车', 'score': 2.3609342036934322e-08}, {'intent': '金融', 'score': 1.272395593332476e-07}], 'entities': [{'endIndex': 7, 'score': 1.0, 'type': '车身参数', 'startIndex': 6, 'str': '排量', 'entity': '排量(L)'}, {'endIndex': 17, 'score': 1.0, 'type': '价格', 'startIndex': 10, 'str': '50万-100万', 'entity': '50万-100万'}, {'endIndex': 23, 'score': 1.0, 'type': '价格', 'startIndex': 19, 'str': '80万左右', 'entity': '80万左右'}, {'endIndex': 29, 'score': 1.0, 'type': '价格', 'startIndex': 25, 'str': '30万以内', 'entity': '30万以内'}, {'endIndex': 35, 'score': 1.0, 'type': '价格', 'startIndex': 31, 'str': '最多20万', 'entity': '最多20万'}, {'endIndex': 42, 'score': 1.0, 'type': '轴距(mm)', 'startIndex': 37, 'str': '轴距5M以内', 'entity': '轴距5m以内'}, {'endIndex': 50, 'score': 1.0, 'type': '排量(L)', 'startIndex': 43, 'str': '排量2.0T以内', 'entity': '排量2.0t以内'}], 'message': '成功', 'topScoringIntent': {'intent': '选 车', 'score': 0.9973706007003784}, 'code': 0}
@@ -459,8 +458,6 @@ def get_qualifier(sentence):   #######主函数#########
             item["type"] = item["type"]+"_"+str(remember_dict[item["type"]])
         else:
             remember_dict[item["type"]]=0
-
-    print(entity_list)
 
     dd = time.time()-haha
     print("orca接口时间：：：：：",dd)

@@ -59,8 +59,26 @@ all_nums = [("价格","range"),("百公里耗电量(kWh/100km)","range"),("车�
 all_canshu_nums = [("油耗描述","logic","list"),("结构","logic","list"),("用途选车","logic","list"),("城市","logic","list"),("国别","logic","list"),("品牌","logic","list"),("口碑参数","logic","list"),("论坛用词","logic","list"),("资讯关键词","logic","list"),("动作指令","logic","list"),("保养项目","logic","list"),("保养次数","logic","list"),("问时间","logic","list"),("问价格","logic","list"),("生产厂商","logic","list"),("指定拆词","logic","list"),("外观描述","logic","list"),("动力描述","logic","list"),("配置描述","logic","list"),("价格描述","logic","list"),("排量描述","logic","list"),("车身配置","logic","list"),("车身参数","logic","list"),("驱动电机数","logic","list"),("发动机型号","logic","list"),("进气形式","logic","list"),("配气机构","logic","list"),("发动机特有技术","logic","list"),("供油方式","logic","list"),("变速箱类型","logic","list"),("驱动方式","logic","list"),("助力类型","logic","list"),("车体结构","logic","list"),("驻车制动类型","logic","list"),("备胎规格","logic","list"),("四驱形式","logic","list"),("中央差速器结构","logic","list"),("电池类型","logic","list"),("后排车门开启方式","logic","list"),("电机布局","logic","list"),("变速箱和简称","logic","list"),("变速箱","logic","list"),("简称","logic","list"),("能源类型","logic","list"),("缸盖材料和缸体材料","logic","list"),("缸盖材料","logic","list"),("缸体材料","logic","list"),("前悬架类型和后悬架类型","logic","list"),("前悬架类型","logic","list"),("后悬架类型","logic","list"),("前制动器类型和后制动器类型","logic","list"),("前制动器类型","logic","list"),("后制动器类型","logic","list"),("级别","logic","list"),("版型","logic","list"),("颜色","logic","list"),("环保标准","logic","list"),("厂商","logic","list"),("询价用词","logic","list"),("热门","logic","list"),("省","logic","list"),("侧滑门","logic","list"),("车窗一键升降","logic","list"),("多天窗","logic","list"),("方向盘调节","logic","list"),("后排座椅放倒方式","logic","list"),("近光灯","logic","list"),("近光灯和远光灯","logic","list"),("可变悬架","logic","list"),("外接音源接口","logic","list"),("扬声器品牌","logic","list"),("远光灯","logic","list"),("座椅材质","logic","list"),("颜色类型","logic","list"),("CD/DVD","logic","list"),("可加热/制冷杯架","logic","list"),("前桥限滑差速器/差速锁和后桥限滑差速器/差速锁","logic","list"),("前桥限滑差速器/差速锁","logic","list"),("后桥限滑差速器/差速锁","logic","list"),("加速度描述","logic","list"),("发动机","logic","list"),("问公里","logic","list"),("价格","range"),("百公里耗电量(kWh/100km)","range"),("车门数(个)","range"),("充电桩价格","range"),("纯电续航里程","range"),("挡位个数","range"),("第三排座椅","range"),("电池容量(kWh)","range"),("电池组质保公里","range"),("电池组质保年限","range"),("电动机总功率(kW)","range"),("电动机总扭矩(N·m)","range"),("缸径(mm)","range"),("高度(mm)","range"),("工信部续航里程(km)","range"),("工信部综合油耗(L/100km)","range"),("官方0-100km/h加速(s)","range"),("行程(mm)","range"),("行李厢容积(L)","range"),("后电动机最大功率(kW)","range"),("后电动机最大扭矩(N·m)","range"),("后轮距(mm)","range"),("后轮胎规格","range"),("货箱尺寸(mm)","range"),("快充电量(%)","range"),("快充时间(小时)","range"),("宽度(mm)","range"),("慢充时间(小时)","range"),("每缸气门数(个)","range"),("排量(L)","range"),("排量(mL)","range"),("气缸数(个)","range"),("前电动机最大功率(kW)","range"),("前电动机最大扭矩(N·m)","range"),("前轮距(mm)","range"),("前轮胎规格","range"),("上市时间","range"),("实测0-100km/h加速(s)","range"),("实测100-0km/h制动(m)","range"),("实测快充时间(小时)","range"),("实测离地间隙(mm)","range"),("实测慢充时间(小时)","range"),("实测续航里程(km)","range"),("实测油耗(L/100km)","range"),("系统综合功率(kW)","range"),("系统综合扭矩(N·m)","range"),("压缩比","range"),("扬声器数量","range"),("油箱容积(L)","range"),("长度(mm)","range"),("整备质量(kg)","range"),("整车质保公里","range"),("整车质保年限","range"),("中控台彩色大屏尺寸","range"),("轴距(mm)","range"),("最大功率(kW)","range"),("最大功率转速(rpm)","range"),("最大马力(Ps)","range"),("最大扭矩(N·m)","range"),("最大扭矩转速(rpm)","range"),("最大载重质量(kg)","range"),("最高车速(km/h)","range"),("最小离地间隙(mm)","range"),("座位数(个)","range")]
 # a = {"选车":[{"chain1":[("have_是不是","precondition",""),("set_1","or",[("国别","logic","list"),("价格","range",""),("配置参数","logic","list")]),("have_有没有","judgement","")]},{"chain2":[("车系","plain","str"),("have_有没有","judgement","")]}],"配置":[{"chain0":[("车系","plain","str"),("车身配置","plain","str")]}]}
 # ind = 0
-a = {"选车":[{"chain0":[("条件选车","chain_name"),("set_1","or",all_canshu_nums)]},{"chain1":[("车系选车","chain_name"),("车系","logic","list")]},{"chain2":[("价格选车","chain_name"),("价格","range"),("价格_1","range")]}],"配置":[{"chain0":[("问配置","chain_name"),("车系","plain","str"),("车身配置","plain","str")]}]}
-_koubei = {}
+a = {"选车":[{"chain0":[("条件选车","chain_name"),("set_1","or",all_canshu_nums)]},
+           {"chain1":[("车系选车","chain_name"),("车系","logic","list")]},
+           {"chain2":[("价格选车","chain_name"),("价格","range"),("价格_1","range")]}],
+     "配置":[{"chain0":[("问配置","chain_name"),("车系","plain","str"),("车身配置","plain","str")]}],
+     "保养":[{"chain0":[("保养通用","chain_name"),("车系","plain","str")]},
+           {"chain1":[("保养项目","chain_name"),("车系","plain","str"),("保养次数","plain","str")]},
+           {"chain2":[("保养费用","chain_name"),("车系","plain","str"),("保养次数","plain","str"),("set_1","or",[("have_钱","judgement"),("have_多","judgement")])]},
+           {"chain3":[("保养咨询","chain_name"),("车系","plain","str"),("set_1","or",[("have_哪种","judgement"),("have_好","judgement")])]},
+           {"chain4":[("保养费用","chain_name"),("问价格","plain","str")]},
+           {"chain5":[("保养费用","chain_name"),("车系","plain","str"),("set_1","or",[("问价格","plain","str"),("have_保养费","judgement"),("have_费用","judgement"),("have_费用","judgement")])]},
+           {"chain6":[("保养通用","chain_name"),("have_保养","judgement")]},
+           {"chain7":[("保养项目","chain_name"),("车系","plain","str"),("保养项目","plain","str"),("问公里","plain","str")]},
+           {"chain8": [("保养项目", "chain_name"), ("车系", "plain", "str"), ("保养项目", "plain", "str")]},
+           {"chain9":[("保养费用","chain_name"),("set_1","and",[("have_保养","judgement"),("have_价","judgement")])]},
+           {"chain10":[("保养周期","chain_name"),("问时间","plain","str"),("set_1","or",[("have_次","judgement"),("保养次数","plain","str")])]},
+           {"chain11":[("保养费用","chain_name"),("车系","plain","str"),("have_保养","judgement"),("have_钱","judgement")]},
+           {"chain12":[("保养项目","chain_name"),("车系","plain","str"),("公里数","plain","str")]}
+           ]}
+
+
 print(a)
 
 def make_index_recur(path,__warehouse,_warehouse):   ####__warehouse是一直改变的正主  _warehouse只是个复制参照品
@@ -76,20 +94,23 @@ def make_index_recur(path,__warehouse,_warehouse):   ####__warehouse是一直改
             for item_key in tmp_warehouse[dict_name]:
                 if dict_name == "is_dict":
                     if tmp_warehouse[dict_name][item_key] == "":
+                        # print("hahaha",item_key,__warehouse["index"]["str_index"])
+                        # print(path)
+
                         if item_key in __warehouse["index"]["str_index"]:
-                            __warehouse["index"]["str_index"][item_key].append([path])  ####item_key是不变的实体名字 [chain]是会变化的
+                            __warehouse["index"]["str_index"][item_key].append(path)  ####item_key是不变的实体名字 [chain]是会变化的
                         else:
                             __warehouse["index"]["str_index"][item_key] = []
                             __warehouse["index"]["str_index"][item_key].append(path)
                     else:
                         if item_key in __warehouse["index"]["list_index"]:
-                            __warehouse["index"]["list_index"][item_key].append([path])
+                            __warehouse["index"]["list_index"][item_key].append(path)
                         else:
                             __warehouse["index"]["list_index"][item_key] = []
                             __warehouse["index"]["list_index"][item_key].append(path)
                 if dict_name == "range_dict":
                     if item_key in __warehouse["index"]["range_index"]:
-                        __warehouse["index"]["range_index"][item_key].append([path])
+                        __warehouse["index"]["range_index"][item_key].append(path)
                     else:
                         __warehouse["index"]["range_index"][item_key]=[]
                         __warehouse["index"]["range_index"][item_key].append(path)
@@ -200,8 +221,8 @@ if __name__ == "__main__":
     import time
     shijian = time.time()
     warehouse = make_warehouse(a)
-    db0 = redis.Redis(host='127.0.0.1', password="123456", port=6379, db=0)
+    db0 = redis.Redis(host='127.0.0.1', password="", port=6379, db=0)
     db0.set("warehouse",str(warehouse))
     print("前端到存储数据库时间：：：",time.time()-shijian)
-    print("final",warehouse["选车"]["chains"]["chain0"]["self_judgement"])
+    print("final",warehouse["保养"]["chains"]["chain3"])
     print(warehouse)
