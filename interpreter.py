@@ -80,7 +80,7 @@ warehouse = eval(db1.get("warehouse"))
 # a_fun = "def funs(sentence,the_str):\n   if('a' in 'a'):\n      return True\n   else:      return False"
 # c = eval(a_fun)
 # print(c)
-map_prefix2function = {"have":{"fun":"'[$arg0]' in '[$arg1]'","param":["[$split]_","[$origin_sentence]"]}}
+map_prefix2function = {"have":{"fun":"'[$arg0]' in '[$arg1]'","param":["[$split]_","[$origin_sentence]"]},"nothaveE":{"fun":"'[$arg0]' not in [$arg1]","param":["[$split]_","[$orca_entity_names]"]},"nothave":{"fun":"'[$arg0]' not in '[$arg1]'","param":["[$split]_","[$origin_sentence]"]}}
 #########todo make shape of chain dict##########
 
 ########todo make precondition#############
@@ -96,7 +96,7 @@ map_prefix2function = {"have":{"fun":"'[$arg0]' in '[$arg1]'","param":["[$split]
 def make_term(name,value,logic=1):
     return {"name":name,"value":value,"logic":logic}
 
-def execute_condition(judgement,origin_sentence):
+def execute_condition(judgement,origin_sentence,orca_entity):
     judgement_condition = judgement.split("_")
 
     if judgement_condition[0] in map_prefix2function:
@@ -112,11 +112,17 @@ def execute_condition(judgement,origin_sentence):
             elif '[$origin_sentence]' in the_judgement["param"][index]:
                 the_term = origin_sentence
 
+            elif '[$orca_entity_names]' in the_judgement["param"][index]:
+                tmp_l = []
+                for enti in orca_entity:
+                    tmp_l.append(enti["name"])
+                the_term = tmp_l
+
             elif the_judgement["param"][index]!="":
                 the_term = the_judgement["param"][index]
 
             if the_term!="$$$$$$":
-                _fun = _fun.replace("[$arg"+str(index)+"]",the_term)
+                _fun = _fun.replace("[$arg"+str(index)+"]",str(the_term))
         return eval(_fun)
     else:
         return False
@@ -246,7 +252,7 @@ def fill_local_dict(name,value,logic,slot_dict):#############对is_not_range填�
                         tmp_slot["range_dict"][name][">"] = ""
 
 
-def fill_boolean_dict(chain,origin_sentence,slot_dict):       ######对自判断填槽
+def fill_boolean_dict(chain,origin_sentence,slot_dict,orca_entity):       ######对自判断填槽
     if chain in slot_dict["index"]["boolean_index"]:
         paths = slot_dict["index"]["boolean_index"][chain]
         for path in paths:
@@ -262,7 +268,7 @@ def fill_boolean_dict(chain,origin_sentence,slot_dict):       ######对自判断
                 tmp_slot = eval(get_value)
 
                 for judgement in tmp_slot:
-                    tmp_slot[judgement] = execute_condition(judgement,origin_sentence)
+                    tmp_slot[judgement] = execute_condition(judgement,origin_sentence,orca_entity)
 
 
 
@@ -273,7 +279,7 @@ def fill_slot(intent,orca_result,origin_sentence):
         if len(slot_dict["precondition"][chain])==0:
             slot_dict["precondition"][chain] = True
             ##############boolean逐个填槽####################
-            fill_boolean_dict(chain,origin_sentence,slot_dict)
+            fill_boolean_dict(chain,origin_sentence,slot_dict,orca_result)
             ##############boolean逐个填槽####################
         else:
             for index in range(len(slot_dict["precondition"][chain])-1,-1,-1):
@@ -282,7 +288,7 @@ def fill_slot(intent,orca_result,origin_sentence):
             if len(slot_dict["precondition"][chain]) == 0:
                 slot_dict["precondition"][chain] = True
                 ##############boolean逐个填槽####################
-                fill_boolean_dict(chain,origin_sentence,slot_dict)
+                fill_boolean_dict(chain,origin_sentence,slot_dict,orca_result)
                 ##############boolean逐个填槽####################
             else:
                 slot_dict["precondition"][chain] = False
@@ -383,7 +389,7 @@ def parse_slot(_slot_dict): ####解析slot
 
 
 def testttttttt(file_name):
-    aaa = open("the_errors","a",encoding="utf8")
+    aaa = open("errorss","a",encoding="utf8")
     import time
     from get_qualifier import get_qualifier
     hahahahaha = open(file_name,"r",encoding="utf8")
@@ -444,6 +450,7 @@ def testttttttt(file_name):
 
 def test_sts(sts):
     from get_qualifier import get_qualifier
+    import time
 
 
     #orca_results = [{"name":"车系","value":"宝马5系","logic":"1"},{"name":"配置参数","value":"全景天窗","logic":"1"},{"name":"价格","value":"<300000","logic":"1"},{"name":"国别","value":"日本","logic":"0"},{"name":"动力","value":"<50","logic":"1"},{"name":"国别_1","value":"德国","logic":"1"}]
@@ -457,12 +464,12 @@ def test_sts(sts):
 
     orca_results,orca_intent = get_qualifier(sts)
     orca_intent = orca_intent
-    # print("原句:::{}".format(test_sents))
-    # print("orca_意图:{}++++++++++++++++解析后的实体:{}".format(orca_intent,orca_results))
-    # aa = time.time()
+    print("原句:::{}".format(sts))
+    print("orca_意图:{}++++++++++++++++解析后的实体:{}".format(orca_intent,orca_results))
+    aa = time.time()
 
     slot_result = fill_slot(intent=orca_intent,orca_result=orca_results,origin_sentence=sts)
-    # print("解析理解所用时间:::",time.time()-aa)
+    print("解析理解所用时间:::",time.time()-aa)
     # db1 = redis.Redis(host='127.0.0.1', password="123456", port=6379, db=1)
     # db1.set(str(user_id),slot_result)
     terms,target_chain_ = parse_slot(slot_result)
@@ -486,5 +493,5 @@ def test_sts(sts):
 
 if __name__=="__main__":
     # testttttttt("nums")
-    # test_sts("阿尔法罗密欧的车型，后期保养贵吗？")
+    # test_sts("宝马5系多少公里换压箱油？")
     testttttttt("nums")
